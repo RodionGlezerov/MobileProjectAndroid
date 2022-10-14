@@ -6,6 +6,7 @@ import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -70,12 +71,13 @@ public class HelperBase {
         int startY = (int) (size.height * 0.8);
         int stopY = (int) (size.height * 0.3);
 
-        action.longPress(PointOption.point(x,startY))
-                .moveTo(PointOption.point(x,stopY))
+        action.longPress(PointOption.point(x, startY))
+                .moveTo(PointOption.point(x, stopY))
                 .release()
                 .perform();
 
     }
+
     public void swipeDown() {
         TouchAction action = new TouchAction(driver);
 
@@ -86,10 +88,65 @@ public class HelperBase {
         int startY = (int) (size.height * 0.5);
         int stopY = (int) (size.height * 0.8);
 
-        action.longPress(PointOption.point(x,startY))
-                .moveTo(PointOption.point(x,stopY))
+        action.longPress(PointOption.point(x, startY))
+                .moveTo(PointOption.point(x, stopY))
                 .release()
                 .perform();
 
+    }
+
+    public void moveUp(By locator) {
+        TouchAction action = new TouchAction(driver);
+
+        Dimension size = driver.manage().window().getSize();
+
+        int downPoint = (int) (size.height * 0.6);
+        int upPoint = (int) (size.height * 0.5);
+//      get Element's point
+        WebElement element = driver.findElement(locator);
+        int leftX = element.getLocation().getX();
+        int rightX = leftX + element.getSize().getWidth();
+        int middleX = (leftX + rightX) / 2;
+
+        action.longPress(PointOption.point(middleX, downPoint))
+                .moveTo(PointOption.point(middleX, upPoint))
+                .release()
+                .perform();
+    }
+
+    public void moveDown(By locator) {
+        TouchAction action = new TouchAction(driver);
+
+        Dimension size = driver.manage().window().getSize();
+
+        int downPoint = (int) (size.height * 0.6);
+        int upPoint = (int) (size.height * 0.5);
+//      get Element's point
+        WebElement element = driver.findElement(locator);
+        int leftX = element.getLocation().getX();
+        int rightX = leftX + element.getSize().getWidth();
+        int middleX = (leftX + rightX) / 2;
+
+        action.longPress(PointOption.point(middleX, upPoint))
+                .moveTo(PointOption.point(middleX, downPoint))
+                .release()
+                .perform();
+    }
+
+    public void pressOnTimer(int x, int y){
+        TouchAction action = new TouchAction(driver);
+
+        Dimension size = driver.manage().window().getSize();
+
+        action.tap(PointOption.point(x,y))
+                .release()
+                .perform();
+
+    }
+
+    public String isTitlePresent() {
+        String recycle_title = driver.findElement(By.id("recycle_title")).getText();
+        System.out.println(recycle_title);
+        return recycle_title;
     }
 }

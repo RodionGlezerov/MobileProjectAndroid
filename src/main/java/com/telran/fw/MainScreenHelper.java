@@ -26,4 +26,10 @@ public class MainScreenHelper extends HelperBase {
         System.out.println("Total reminder quantity: " + idCount);
         return idCount;
     }
+
+    public String isTitlePresent() {
+        String recycle_title = driver.findElement(By.id("recycle_title")).getText();
+        System.out.println(recycle_title);
+        return recycle_title;
+    }
 }
